@@ -13423,7 +13423,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
         //       the data accordingly
         if ( Rng.params.device ) {
 
-          Rng.regenerate();
+        // JEN CHANGE remove regenerate reference  Rng.regenerate();
 
         } else {
 
@@ -13543,7 +13543,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
     },
 
 
-
+/* JEN REMOVE
     regenerate: function() {
       var browserscope, process;
 
@@ -13648,7 +13648,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 
     },
-
+*/
 
 
 
@@ -13872,7 +13872,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
     init: function() {
 
       // Immediately begin requesting browserscope data
-      Rng.Request.jsonp(
+/* JEN CHANGE remove request to browserscope      Rng.Request.jsonp(
         "http://www.browserscope.org/user/tests/table/" + Rng.Browserscope.keys.all + "?v=top-m&o=json",
         function( data ) {
 
@@ -13907,7 +13907,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
             });
           }, 0);
       });
-
+ END JEN CHANGE */
       // console.log( "Rng.Views.Default", this );
     }
   };
@@ -14143,7 +14143,6 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
 
 }( this, this._, this.jQuery ));
-
 App.register( "features", [
   {
     "name": "animationtiming",
@@ -14836,23 +14835,23 @@ App.register( "fixtures", [
   },
   {
     "name": "css3dtransforms",
-    "source": "<iframe id=\"css3dtransforms\" src=\"/tests/css3dtransforms/iframe.html\"></iframe>\n"
+    "source": "<iframe id=\"css3dtransforms\" src=\"/tests/css3dtransforms/iframe.html\"></iframe>\r\n"
   },
   {
     "name": "cssfont",
-    "source": "<div id=\"cssfont\">\n  <iframe id=\"cssfont-face\" src=\"/tests/cssfont/fontface.html\"></iframe>\n  <iframe id=\"cssfont-load\" src=\"/tests/cssfont/iframe.html\"></iframe>\n</div>\n"
+    "source": "<div id=\"cssfont\">\r\n  <iframe id=\"cssfont-face\" src=\"/tests/cssfont/fontface.html\"></iframe>\r\n  <iframe id=\"cssfont-load\" src=\"/tests/cssfont/iframe.html\"></iframe>\r\n</div>\r\n"
   },
   {
     "name": "cssimages-standard",
-    "source": "<iframe id=\"cssimages\" src=\"/tests/cssimages/iframe.html\"></iframe>\n"
+    "source": "<iframe id=\"cssimages\" src=\"/tests/cssimages/iframe.html\"></iframe>\r\n"
   },
   {
     "name": "cssmediaqueries",
-    "source": "<iframe id=\"cssmediaqueries\" src=\"/tests/cssmediaqueries/iframe.html\"></iframe>\n"
+    "source": "<iframe id=\"cssmediaqueries\" src=\"/tests/cssmediaqueries/iframe.html\"></iframe>\r\n"
   },
   {
     "name": "cssminmax",
-    "source": "<div id=\"cssminmax\">\n  <div id=\"css-min-width\" style=\"min-width:20px;position:absolute\">?</div>\n  <div id=\"css-max-width\" style=\"max-width:20px;position:absolute;overflow:hidden\">This should push the width pretty damn far</div>\n  <div id=\"css-min-height\" style=\"min-height:20px;position:absolute\"></div>\n  <div id=\"css-max-height\" style=\"max-height:20px;position:absolute;overflow:hidden\">Horizontal<hr>Rule<hr>Rules!</div>\n</div>"
+    "source": "<div id=\"cssminmax\">\r\n  <div id=\"css-min-width\" style=\"min-width:20px;position:absolute\">?</div>\r\n  <div id=\"css-max-width\" style=\"max-width:20px;position:absolute;overflow:hidden\">This should push the width pretty damn far</div>\r\n  <div id=\"css-min-height\" style=\"min-height:20px;position:absolute\"></div>\r\n  <div id=\"css-max-height\" style=\"max-height:20px;position:absolute;overflow:hidden\">Horizontal<hr>Rule<hr>Rules!</div>\r\n</div>"
   },
   {
     "name": "cssposition",
@@ -14864,23 +14863,23 @@ App.register( "fixtures", [
   },
   {
     "name": "cssvalues",
-    "source": "<div id=\"cssvalues\" style=\"display:inline-block;position:absolute;\">H</div>\n"
+    "source": "<div id=\"cssvalues\" style=\"display:inline-block;position:absolute;\">H</div>\r\n"
   },
   {
     "name": "dataurl",
-    "source": "<div id=\"dataurl\">\n  <img id=\"dataurl-data\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4//8/AwAI/AL+5gz/qwAAAABJRU5ErkJggg==\">\n  <img id=\"dataurl-png\" src=\"/tests/dataurl/pixel.png\">\n</div>"
+    "source": "<div id=\"dataurl\">\r\n  <img id=\"dataurl-data\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4//8/AwAI/AL+5gz/qwAAAABJRU5ErkJggg==\">\r\n  <img id=\"dataurl-png\" src=\"/tests/dataurl/pixel.png\">\r\n</div>"
   },
   {
     "name": "deviceorientation",
-    "source": "<div id=\"deviceorientation\"></div>\n"
+    "source": "<div id=\"deviceorientation\"></div>\r\n"
   },
   {
     "name": "formdata",
-    "source": "<div id=\"formdata\">\n  <form id=\"simpleForm\">\n    <input type=\"text\" name=\"a\" value=\"alpha\"/>\n    <select name=\"b\">\n      <option value=\"beta\">Beta</option>\n      <option value=\"gamma\">Gamma</option>\n    </select>\n  </form>\n</div>"
+    "source": "<div id=\"formdata\">\r\n  <form id=\"simpleForm\">\r\n    <input type=\"text\" name=\"a\" value=\"alpha\"/>\r\n    <select name=\"b\">\r\n      <option value=\"beta\">Beta</option>\r\n      <option value=\"gamma\">Gamma</option>\r\n    </select>\r\n  </form>\r\n</div>"
   },
   {
     "name": "forms",
-    "source": "<div id=\"forms\">\n  <input type=\"text\" id=\"requiredtest\" required>\n</div>\n"
+    "source": "<div id=\"forms\">\r\n  <input type=\"text\" id=\"requiredtest\" required>\r\n</div>\r\n"
   },
   {
     "name": "hashchange",
@@ -14888,11 +14887,11 @@ App.register( "fixtures", [
   },
   {
     "name": "html5",
-    "source": "<div id=\"html5\">\n  <abbr></abbr><article></article><aside></aside><audio></audio>\n  <bdi></bdi>\n  <bdi dir=\"ltr\">foo</bdi>\n  <bdi dir=\"rtl\">bar</bdi>\n  <bdi dir=\"auto\">baz</bdi>\n\n  <data></data><details></details><figcaption></figcaption><figure></figure>\n  <footer></footer><header></header><hgroup></hgroup>\n  <mark>hi!</mark><meter></meter><nav></nav><output></output><progress></progress>\n  <section></section><summary></summary><time></time><video></video>\n</div>\n"
+    "source": "<div id=\"html5\">\r\n  <abbr></abbr><article></article><aside></aside><audio></audio>\r\n  <bdi></bdi>\r\n  <bdi dir=\"ltr\">foo</bdi>\r\n  <bdi dir=\"rtl\">bar</bdi>\r\n  <bdi dir=\"auto\">baz</bdi>\r\n\r\n  <data></data><details></details><figcaption></figcaption><figure></figure>\r\n  <footer></footer><header></header><hgroup></hgroup>\r\n  <mark>hi!</mark><meter></meter><nav></nav><output></output><progress></progress>\r\n  <section></section><summary></summary><time></time><video></video>\r\n</div>\r\n"
   },
   {
     "name": "iframe",
-    "source": "<div id=\"iframe\">\n<iframe id=\"regular\" src=\"/tests/iframe/iframe.html?regular\"></iframe>\n<iframe id=\"sandbox\" sandbox src=\"/tests/iframe/iframe.html?sandbox\"></iframe>\n<!-- <iframe id=\"sandbox\" sandbox src=\"/tests/iframe/iframe.html?sandbox\"></iframe>\n<iframe id=\"allowScripts\" sandbox=\"allow-scripts\" src=\"/tests/iframe/allow-scripts.html?allow-scripts\"></iframe>\n<iframe id=\"allowScriptsForms\" sandbox=\"allow-scripts allow-forms\" src=\"/tests/iframe/allow-scripts-forms.html?allow-scripts-forms\"></iframe>\n --></div>\n"
+    "source": "<div id=\"iframe\">\r\n<iframe id=\"regular\" src=\"/tests/iframe/iframe.html?regular\"></iframe>\r\n<iframe id=\"sandbox\" sandbox src=\"/tests/iframe/iframe.html?sandbox\"></iframe>\r\n<!-- <iframe id=\"sandbox\" sandbox src=\"/tests/iframe/iframe.html?sandbox\"></iframe>\r\n<iframe id=\"allowScripts\" sandbox=\"allow-scripts\" src=\"/tests/iframe/allow-scripts.html?allow-scripts\"></iframe>\r\n<iframe id=\"allowScriptsForms\" sandbox=\"allow-scripts allow-forms\" src=\"/tests/iframe/allow-scripts-forms.html?allow-scripts-forms\"></iframe>\r\n --></div>\r\n"
   },
   {
     "name": "navigationtiming",
@@ -14900,19 +14899,19 @@ App.register( "fixtures", [
   },
   {
     "name": "ring-0-performance",
-    "source": "<iframe id=\"ring-0-performance\" src=\"/tests/_resources/framerate-sprite.html?10\"></iframe>\n"
+    "source": "<iframe id=\"ring-0-performance\" src=\"/tests/_resources/framerate-sprite.html?10\"></iframe>\r\n"
   },
   {
     "name": "ring-1-performance",
-    "source": "<iframe id=\"ring-1-performance\" src=\"/tests/_resources/framerate-sprite.html?50\"></iframe>\n"
+    "source": "<iframe id=\"ring-1-performance\" src=\"/tests/_resources/framerate-sprite.html?50\"></iframe>\r\n"
   },
   {
     "name": "ring-2-performance",
-    "source": "<iframe id=\"ring-2-performance\" src=\"/tests/_resources/framerate-sprite.html?100\"></iframe>\n"
+    "source": "<iframe id=\"ring-2-performance\" src=\"/tests/_resources/framerate-sprite.html?100\"></iframe>\r\n"
   },
   {
     "name": "selector",
-    "source": "\n<!-- <div id=\"selector\">\n  <div id=\"getelementsbyclassname\">\n    <div id=\"context\" class=\"foo\"><span class=\"foo\">hi</span></div>\n  </div>\n</div> -->"
+    "source": "\r\n<!-- <div id=\"selector\">\r\n  <div id=\"getelementsbyclassname\">\r\n    <div id=\"context\" class=\"foo\"><span class=\"foo\">hi</span></div>\r\n  </div>\r\n</div> -->"
   },
   {
     "name": "sharedworkers",
@@ -14920,7 +14919,7 @@ App.register( "fixtures", [
   },
   {
     "name": "track",
-    "source": "\n<!-- <iframe id=\"track\" src=\"/tests/track/iframe.html\"></iframe> -->"
+    "source": "\r\n<!-- <iframe id=\"track\" src=\"/tests/track/iframe.html\"></iframe> -->"
   },
   {
     "name": "viewport",
@@ -14928,11 +14927,11 @@ App.register( "fixtures", [
   },
   {
     "name": "visibilitystate",
-    "source": "<!--\nPlaceholder for functional visibility state tests\n<iframe id=\"visibilitystate\" src=\"/tests/visibilitystate/iframe.html\"></iframe>\n\nFrom Mozilla:\n\nVisibility states of an iframe is as same as the parent document. Hiding the iframe with CSS properties does not trigger visibility events nor change the state of the content document.\n\nhttps://developer.mozilla.org/en-US/docs/DOM/Using_the_Page_Visibility_API\n-->\n"
+    "source": "<!--\r\nPlaceholder for functional visibility state tests\r\n<iframe id=\"visibilitystate\" src=\"/tests/visibilitystate/iframe.html\"></iframe>\r\n\r\nFrom Mozilla:\r\n\r\nVisibility states of an iframe is as same as the parent document. Hiding the iframe with CSS properties does not trigger visibility events nor change the state of the content document.\r\n\r\nhttps://developer.mozilla.org/en-US/docs/DOM/Using_the_Page_Visibility_API\r\n-->\r\n"
   },
   {
     "name": "webrtc",
-    "source": "<!--\n  How to get around the prompt issue?\n  <iframe id=\"webrtc\" src=\"/tests/webrtc/iframe.html\"></iframe>\n-->\n"
+    "source": "<!--\r\n  How to get around the prompt issue?\r\n  <iframe id=\"webrtc\" src=\"/tests/webrtc/iframe.html\"></iframe>\r\n-->\r\n"
   }
 ]);
 App.register( "apptypes", [
