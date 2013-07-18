@@ -13785,16 +13785,17 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
     context = context || Rng.Views[ initializer ];
     isValid = !!(context && context.init);
-
-    // console.log( initializer, context, callback );
-
+	
+//    console.log( context, isValid );
+		
     if ( isValid ) {
       // Initialize and cache DOM nodes for this view
       // providing the initializer context
       Rng.Views.dom.init( context, function() {
-        callback.call( context );
+			callback.call( context );
       });
-    }
+    } 
+	
   };
 
   Rng.Views.dom = {
@@ -13909,7 +13910,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
       // console.log( "Rng.Views.Default", this );
     }
-  };
+  }; 
 
   // The "History" view, when accessed from rng.io/history
   Rng.Views.History = {
@@ -14076,7 +14077,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
       // Insert script node into document head to
       // initialize HTTP load request
-      head.appendChild( script );
+      //head.appendChild( script );
     }
   };
 
