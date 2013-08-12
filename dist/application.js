@@ -13145,6 +13145,9 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
     return pairs;
   }());
 
+  // Force all rings to run, all the time.
+  params.all = true;
+  
   Rng = {
 
     // node and templates point at the closed over
@@ -13353,7 +13356,10 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
 
       // Change DOM text from saying "running..." to "tests complete"
       // when the runner is complete
-      var completed = 0;
+      var completed, isPosted;
+	  
+	  completed = 0;
+	  isPosted = false;
 
       Hat.on("runner:done", function( data ) {
         var override;
@@ -13392,6 +13398,17 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
             // requested format
             if ( Rng.params.output ) {
               Rng.dump();
+            }
+			
+			// ?post=endpoint
+            // If the ?post parameter was used,
+            // serialized the results and post to top-most window
+            if ( Rng.params.post && !isPosted ) {
+              isPosted = true;
+
+              console.log( "Post: Results posted to provided endpoint" );
+
+              Rng.post( storage );
             }
           }
         }
@@ -13541,8 +13558,32 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
       // test results with correct header
       window.location.href = prefix + finalized;
     },
+	// post the results to provided endpoint
+    post: function( data ) {
+      var xhr = new window.XMLHttpRequest();
+
+      xhr.onreadystatechange = function() {
+        if ( xhr.readyState === 4 ) {
+          console.log( "Post Results Complete" );
+        }
+      };
+
+      if ( typeof Rng.params.post !== "string" ) {
+        Rng.params.post = "/";
+      }
 
 
+      xhr.open( "POST", Rng.params.post, true );
+      xhr.send(
+        JSON.stringify( data, function( key, val ) {
+          // Removed the rendered HTML key/vals
+          if ( key === "rendered" || key === "assertion" ) {
+            return undefined;
+          }
+          return val;
+        })
+      );
+    },
 
     regenerate: function() {
       var browserscope, process;
@@ -13861,7 +13902,8 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
         "title",
         "devices",
         "adevices",
-        "sdevices"
+        "sdevices",
+		"notable"
       ]
     }
   };
@@ -13908,7 +13950,7 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
           }, 0);
       });
 
-      // console.log( "Rng.Views.Default", this );
+      //console.log( "Rng.Views.Default", this );
     }
   }; 
 
@@ -13916,7 +13958,50 @@ if ( typeof define === "function" && define.amd && define.amd.jQuery ) {
   Rng.Views.History = {
     init: function() {
       // console.log( "INITIALIZE APP.VIEW: History" );
+	  //
+      var keys, params;
 
+      // Derive first record of browserscopekeys from cache
+      keys = Rng.Cache.get("browserscopekeys").first();
+
+      // Build a set of interesting URLs to link to from /history.
+      // This was added at the last minute and may need some fine
+      // tuning or refactoring in the not-so-distant future
+
+      params = [
+        {
+          type: "JSON",
+          query: "v=3&o=json"
+        },
+        {
+          type: "CSV",
+          query: "v=3&o=csv"
+        },
+        {
+          type: "Table",
+          query: "layout=simple&highlight=true"
+        }
+      ];
+
+      // For each type of browserscope key, construct
+      // a set of urls using the params array and
+      // inject the urls as anchors into the "notable" UL
+      [ "rings", "all" ].forEach(function( set, k ) {
+        var node = nodes.notable.children[ k ],
+            key = keys[ set ];
+
+        // Reduce the params array above into a
+        // string of injectable innerHTML
+        node.innerHTML += params.reduce(function( concat, param ) {
+          return concat + templates["notable-tpl"]({
+            key: key,
+            param: param.query,
+            type: param.type
+          });
+        }, "");
+      });
+
+      // Display the bare keys.
       $("[data-browserscope]").html(function() {
         return Rng.Cache.get("browserscopekeys").first()[ $(this).data("browserscope") ];
       });
@@ -14199,7 +14284,7 @@ App.register( "features", [
   {
     "name": "cssanimation-standard",
     "title": "CSS3 Animation, Standard",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/css3-animations/",
     "sources": []
   },
@@ -14364,7 +14449,7 @@ App.register( "features", [
   {
     "name": "csstransforms-standard",
     "title": "CSS3 2D Transforms, Standard",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/css3-2d-transforms/",
     "sources": [
       "http://javascript.nwbox.com/CSSSupport/"
@@ -14380,7 +14465,7 @@ App.register( "features", [
   {
     "name": "csstransitions-standard",
     "title": "CSS3 Transitions, Standard",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/css3-transitions/",
     "sources": []
   },
@@ -14543,7 +14628,7 @@ App.register( "features", [
   {
     "name": "indexeddb-standard",
     "title": "IndexedDB, Standard",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/IndexedDB/",
     "sources": []
   },
@@ -14582,9 +14667,11 @@ App.register( "features", [
   {
     "name": "network",
     "title": "Network Info &#8253;",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/netinfo-api/",
-    "sources": []
+    "sources": [
+		"http://dvcs.w3.org/hg/dap/raw-file/tip/network-api/Overview.html"
+	]
   },
   {
     "name": "notifications",
@@ -14592,6 +14679,7 @@ App.register( "features", [
     "ring": 2,
     "spec": "http://www.chromium.org/developers/design-documents/desktop-notifications/api-specification",
     "sources": [
+	  "http://www.chromium.org/developers/design-documents/desktop-notifications/api-specification",
       "http://www.html5rocks.com/en/tutorials/notifications/quick/"
     ]
   },
@@ -14703,9 +14791,16 @@ App.register( "features", [
     "sources": []
   },
   {
+	"name": "url",
+    "title": "URL",
+    "ring": 1,
+    "spec": "http://www.w3.org/TR/webrtc/#url",
+    "sources": []
+  },
+  {
     "name": "vibration",
     "title": "Vibration &#8253;",
-    "ring": null,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/vibration/",
     "sources": []
   },
@@ -14735,7 +14830,7 @@ App.register( "features", [
   {
     "name": "webrtc",
     "title": "WebRTC (Real time Audio & Video) &#8253;",
-    "ring": 1,
+    "ring": 2,
     "spec": "http://www.w3.org/TR/webrtc/",
     "sources": [
       "http://dev.w3.org/2011/webrtc/editor/getusermedia.html",
@@ -15127,6 +15222,14 @@ App.register( "ringheaders", [
 
       // Ensure this isn't repeated by strange JavaScript ghosts...
       if ( beacon === 0 ) {
+	  
+		// Allow devices to run rng.io "confidentially"
+        // use: ?confidential
+        if ( Rng.params.confidential ) {
+          console.log( "Confidential: No results logged" );
+          return;
+        }
+		
         console.log( "Beacon Results to Browserscope" );
 
         if ( /localhost|dev|10/.test( window.location.hostname ) ) {

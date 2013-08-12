@@ -285,11 +285,33 @@
 
   // Get any API on any object, can test with prefixes or without
   Hat.API = function( object, api, withPrefixes, expectDefault ) {
-    var found = Hat.get.domProp( object, api, withPrefixes );
-
-    if ( arguments.length === 4 && found === expectDefault ) {
+    var found; 
+	
+	if(arguments.lenth === 1) {
+		//Could be falsey value
+		if ("expectDefault" in object) {
+			expectDefault = object.expectDefault;
+		}
+		//could be falsey value
+		if ( "withPrefixes" in object) {
+			withPrefixes = object.withPrefixes;
+		}
+		
+		api = object.api;
+		object = object.host;
+	}
+	
+	if( !object || object == null ) {
+		return undefined;
+	}
+	
+	found = Hat.get.domProp( object, api, withPrefixes );
+	
+	//When full params list or options objects
+    if (( arguments.length === 1 || arguments.length === 4) && found === expectDefault ) {
       return found;
     }
+	
     return found || undefined;
   };
 
@@ -499,6 +521,8 @@
   };
 
   // `params` initialized at top of program file
+  //Force all rings to run, all the time
+  params.push({key: "all", value: true});
   if ( params ) {
     params.forEach(function( obj ) {
       runnerConfig[ obj.key ] = obj.value;
